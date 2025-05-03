@@ -6,11 +6,15 @@ type Controller = {
 
 const pokemonController: Controller = {
   getPokemon: async (req, res, next) => {
-    const { name } = req.params;
-    const response = await fetch('https://pokeapi.co/api/v2/pokemon/ditto');
-    const data = await response.json()
-    res.locals.pokemonData = data
-    return next();
+    try {
+      const { name } = req.params;
+      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
+      const data = await response.json();
+      res.locals.pokemonData = data;
+      return next();
+    } catch (error : any) {
+      console.error('An error occurred:', error.message);
+    }
   },
 };
 
